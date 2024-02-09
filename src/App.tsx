@@ -1,5 +1,4 @@
 // Library imports
-import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 // Custom imports
 import Home from "./pages/home";
