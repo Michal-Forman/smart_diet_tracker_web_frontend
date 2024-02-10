@@ -1,4 +1,4 @@
-function NutrientCard({ usersIntake, name }) {
+function NutrientCard({ usersIntake, name }: any) {
   return (
     <div className="nutrient-card">
       <h2 className="nutrient-name">{name}</h2>
