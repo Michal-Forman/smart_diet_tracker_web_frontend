@@ -33,6 +33,7 @@ function Login() {
       const response = await axios.post(backendUrl, formData);
       const { token } = response.data;
       localStorage.setItem("token", token);
+      console.log("token:", token);
       navigate("/");
     } catch (error: any) {
       console.log("Registration failed", error);
