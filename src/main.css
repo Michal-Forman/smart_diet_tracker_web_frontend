@@ -45,11 +45,13 @@ html {
     border-bottom-right-radius: 50%;
   }
   #home--cards-container {
+    width: 80%;
     margin-top: 120px;
+    margin-left: 10%;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
   }
 
   /* Home Page -- Nutrient Cards */
@@ -121,6 +123,76 @@ html {
 
   #home--food-submit-button img {
     width: 70%;
+  }
+
+  /* Home Page -- New food card */
+  .new-food-card {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 120px;
+    width: 80%;
+    background-color: #e8e9eb;
+    color: black;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+    margin-left: 10%;
+  }
+
+  .new-food-card h1 {
+    margin: 0;
+  }
+
+  .new-food-card h2 {
+    margin: 0;
+  }
+
+  .new-food-card h3 {
+    margin: 0;
+  }
+
+  .new-food-card p {
+    margin: 0;
+  }
+
+  .new-food-card--macros-container {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+  }
+
+  .new-food-card--macros {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  .fade-in {
+    animation: fadeIn 1s;
+  }
+
+  .fade-out {
+    animation: fadeOut 1s;
   }
 
   /* Register page */

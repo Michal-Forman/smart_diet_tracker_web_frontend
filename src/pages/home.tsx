@@ -8,11 +8,23 @@ import userLogo from "../assets/IMG/user.png";
 import hamburgerMenu from "../assets/IMG/hamburgerMenu.png";
 import sendArrow from "../assets/IMG/sendArrow.png";
 import NutrientCard from "../components/nutrientCard";
+import NewFoodCard from "../components/newFoodCard";
 
 function Home() {
   const navigate = useNavigate();
 
+  const [newFoodData, setNewFoodData] = useState({
+    name: "",
+    calories: null,
+    protein: null,
+    carbs: null,
+    fat: null,
+  });
+
+  const [cardShouldBeShown, setCardShouldBeShown] = useState(false);
+  const [showNewFoodCard, setShowNewFoodCard] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [cardAnimation, setCardAnimation] = useState("");
   const [totals, setTotals] = useState({
     calories: null,
     protein: null,
@@ -52,6 +64,26 @@ function Home() {
     writeFoodData();
   }, []);
 
+  useEffect(() => {
+    if (cardShouldBeShown) {
+      setShowNewFoodCard(true);
+      setCardAnimation("fade-in");
+
+      const timer = setTimeout(() => {
+        setCardAnimation("fade-out");
+
+        setTimeout(() => {
+          setCardShouldBeShown(false);
+          setShowNewFoodCard(false);
+        }, 1000);
+      }, 4000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [cardShouldBeShown]);
+
   const handleChange = (event: any) => {
     setInputValue(event.target.value);
   };
@@ -84,6 +116,10 @@ function Home() {
       setInputValue("");
       console.log("Food logged,", response);
       writeFoodData();
+      setCardShouldBeShown(true);
+      console.log("correct data", response.data.data);
+      setNewFoodData(response.data.data);
+      console.log("newFoodData:", newFoodData);
     } catch (error: any) {
       console.log("Food logging failed", error);
       alert(error.response.data);
@@ -116,6 +152,19 @@ function Home() {
             <></>
           )}
         </div>
+        {/* New food card */}
+        {showNewFoodCard ? (
+          <NewFoodCard
+            opacity={cardAnimation}
+            name={newFoodData.name}
+            calories={newFoodData.calories}
+            protein={newFoodData.protein}
+            carbs={newFoodData.carbs}
+            fat={newFoodData.fat}
+          />
+        ) : (
+          <></>
+        )}
         <div id="home--food-form-container">
           <form id="home--food-form" onSubmit={handleSubmit}>
             <input
