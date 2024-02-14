@@ -87,22 +87,32 @@ function Food() {
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const day = date.getDate().toString().padStart(2, "0");
 
+    return `${year}-${month}-${day}`;
+  };
+
+  const getRelativeFoodLabel = (date: string) => {
     // Get today's date in correct format
     const today = new Date();
     const todayYear = today.getFullYear();
     const todayMonth = (today.getMonth() + 1).toString().padStart(2, "0");
     const todayDay = today.getDate().toString().padStart(2, "0");
+    const todayString = `${todayYear}-${todayMonth}-${todayDay}`;
 
-    if (year === todayYear && month === todayMonth && day === todayDay) {
+    // Get yesterday's date in correct format
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayYear = yesterday.getFullYear();
+    const yesterdayMonth = (yesterday.getMonth() + 1)
+      .toString()
+      .padStart(2, "0");
+    const yesterdayDay = yesterday.getDate().toString().padStart(2, "0");
+    const yesterdayString = `${yesterdayYear}-${yesterdayMonth}-${yesterdayDay}`;
+
+    // Compare the date to today's date
+    if (date === todayString) {
       return "Today";
-    } else if (
-      year === todayYear &&
-      month === todayMonth &&
-      day === (today.getDate() - 1).toString().padStart(2, "0")
-    ) {
-      return "Yesterday";
-    } else {
-      return `${day}-${month}-${year}`;
+    } else if (date === yesterdayString) {
+      return date;
     }
   };
 
