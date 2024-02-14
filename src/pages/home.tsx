@@ -4,11 +4,15 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 // Custom imports
+import getBackendUrl from "../functions/getBackendUrl";
 import userLogo from "../assets/IMG/user.png";
 import hamburgerMenu from "../assets/IMG/hamburgerMenu.png";
 import sendArrow from "../assets/IMG/sendArrow.png";
+import cross from "../assets/IMG/cross.png";
 import NutrientCard from "../components/nutrientCard";
 import NewFoodCard from "../components/newFoodCard";
+import Menu from "../components/menu";
+import Navbar from "../components/navBar";
 
 function Home() {
   const navigate = useNavigate();
@@ -33,24 +37,22 @@ function Home() {
   });
 
   const writeFoodData = async () => {
-    let backendUrl;
-    if (
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "192.168.2.173"
-    ) {
-      // When developing
-      backendUrl = "http://192.168.2.173:3000/api/smart-diet-tracker/food";
-    } else {
-      // When in production
-      backendUrl =
-        "https://main-api-0xrx.onrender.com/api/smart-diet-tracker/food";
+    const backendUrl = getBackendUrl("todays-food");
+    try {
+      const response = await axios.get(backendUrl, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      console.log("response:", response);
+      setTotals(response.data.totals);
+    } catch (error: any) {
+      if (error.response.status === 403) {
+        localStorage.removeItem("token");
+        navigate("/login");
+      } else {
+        console.log("Failed to fetch food data", error);
+        alert("Error getting today's food data");
+      }
     }
-    const response = await axios.get(backendUrl, {
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    });
-    console.log("response:", response.data.totals);
-    setTotals(response.data.totals);
-    console.log("totals:", totals);
   };
 
   useEffect(() => {
@@ -90,20 +92,7 @@ function Home() {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-
-    let backendUrl;
-    if (
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "192.168.2.173"
-    ) {
-      // When developing
-      backendUrl = "http://192.168.2.173:3000/api/smart-diet-tracker/food";
-    } else {
-      // When in production
-      backendUrl =
-        "https://main-api-0xrx.onrender.com/api/smart-diet-tracker/food";
-    }
-
+    const backendUrl = getBackendUrl("food");
     try {
       const response = await axios.post(
         backendUrl,
@@ -122,24 +111,16 @@ function Home() {
       console.log("newFoodData:", newFoodData);
     } catch (error: any) {
       console.log("Food logging failed", error);
-      alert(error.response.data);
+      alert("Error logging food");
     }
   };
 
   return (
     <>
       <div className="background">
-        {/* Navbar */}
-        <div className="top-bar">
-          <a>
-            <img className="icon" src={hamburgerMenu} />
-          </a>
-          <a>
-            <img className="icon" src={userLogo} />
-          </a>
-        </div>
+        <Navbar title="home" />
+        {/* Cards */}
         <div id="home--cards-container">
-          {/* Cards */}
           {totals ? (
             Object.entries(totals).map(([nutrient, value]) => (
               <NutrientCard

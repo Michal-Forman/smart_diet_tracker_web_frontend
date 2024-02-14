@@ -22,6 +22,7 @@ html {
     background-color: white;
     width: 100vw;
     height: 100vh;
+    overflow-y: scroll;
   }
   h1 {
     color: white;
@@ -195,6 +196,51 @@ html {
     animation: fadeOut 1s;
   }
 
+  /* Home Page -- Menu */
+
+  .menu--container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 33%;
+    height: 100%;
+    background-color: white;
+    border: solid 3px var(--green);
+    border-left: none;
+    border-top: none;
+    border-bottom: none;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-out;
+  }
+
+  .menu--container.open {
+    transform: translateX(0);
+  }
+
+  #menu--home-container {
+    margin-top: 100px;
+  }
+
+  .menu--link {
+    text-decoration: none;
+    color: black;
+  }
+
+  .menu--link h3 {
+    margin: 0;
+    margin-bottom: 20px;
+  }
+
+  .active h3 {
+    background-color: var(--green);
+    padding: 2px;
+    border-radius: 5px;
+  }
+
   /* Register page */
   #register--top-bar {
     justify-content: center;
@@ -308,4 +354,54 @@ html {
     border: solid 3px white;
     border-radius: 20px;
   }
+}
+
+/* Food page -- food card */
+
+.food-card--container {
+  width: 100%;
+  height: 100%;
+  margin-top: 120px;
+}
+.food-card {
+  margin-top: 20px;
+}
+
+.food-card--delete-img {
+  height: 30px;
+  width: 30px;
+}
+
+.food-card--edit-img {
+  height: 30px;
+  width: 30px;
+}
+
+.food-card--upper-section-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+}
+
+/* Food page -- food devider */
+
+.food-devider--container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.food-devider--first-line {
+  height: 1px;
+  width: 30%;
+  border-top: solid 1px black;
+}
+
+.food-devider--second-line {
+  height: 1px;
+  width: 30%;
+  border-top: solid 1px black;
 }
