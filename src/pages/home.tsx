@@ -5,13 +5,9 @@ import axios from "axios";
 
 // Custom imports
 import getBackendUrl from "../functions/getBackendUrl";
-import userLogo from "../assets/IMG/user.png";
-import hamburgerMenu from "../assets/IMG/hamburgerMenu.png";
 import sendArrow from "../assets/IMG/sendArrow.png";
-import cross from "../assets/IMG/cross.png";
 import NutrientCard from "../components/nutrientCard";
 import NewFoodCard from "../components/newFoodCard";
-import Menu from "../components/menu";
 import Navbar from "../components/navBar";
 
 function Home() {
