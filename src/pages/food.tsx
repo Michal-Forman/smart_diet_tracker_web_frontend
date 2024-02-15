@@ -58,13 +58,13 @@ function Food() {
   };
 
   const groupByDate = (foodData: any) => {
-    const groups: any = {};
+    let groups: any = {};
 
     foodData.forEach((foodItem: any) => {
       if (!groups[foodItem.time]) {
         groups[foodItem.time] = [];
       }
-      groups[foodItem.time].push(foodItem);
+      groups[foodItem.time].unshift(foodItem);
     });
 
     // convert the groups object to an array of objects
@@ -74,6 +74,9 @@ function Food() {
         foodItems: groups[date],
       };
     });
+
+    // Reverse the array to have the most recent date first
+
     // Sort the array by date
     groupedFoodData.sort((a, b) => b.date.localeCompare(a.date));
 
