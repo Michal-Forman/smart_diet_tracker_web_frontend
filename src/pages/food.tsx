@@ -113,6 +113,7 @@ function Food() {
                       carbs={foodItem.carbs}
                       fat={foodItem.fat}
                       onDelete={getAllFood}
+                      onRefresh={getAllFood}
                     />
                   );
                 })}

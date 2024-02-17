@@ -1,12 +1,25 @@
 // Librairies imports
 import axios from "axios";
+import { useState } from "react";
 
 // Custom imports
 import bin from "../assets/IMG/bin.png";
 import edit from "../assets/IMG/edit.png";
 import getBackendUrl from "../functions/getBackendUrl";
+import FoodEditingCard from "./foodEditingCard";
 
-function foodCard({ name, calories, protein, carbs, fat, id, onDelete }: any) {
+function foodCard({
+  name,
+  calories,
+  protein,
+  carbs,
+  fat,
+  id,
+  onDelete,
+  onRefresh,
+}: any) {
+  const [isEditing, setIsEditing] = useState(false);
+
   const handleDelete = async () => {
     const userResponse = confirm(
       "You are now about to delete this food. This action cannot be undone!",
@@ -28,15 +41,38 @@ function foodCard({ name, calories, protein, carbs, fat, id, onDelete }: any) {
     }
   };
 
+  const handleEdit = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
+
   return (
     <>
+      {isEditing && (
+        <>
+          <div className="food-card--editing-background"></div>{" "}
+          <FoodEditingCard
+            name={name}
+            calories={calories}
+            protein={protein}
+            carbs={carbs}
+            fat={fat}
+            id={id}
+            onCancel={handleCancel}
+            onSubmit={onRefresh}
+          />
+        </>
+      )}
       <div className="new-food-card food-card">
         <div className="food-card--upper-section-container">
           <div onClick={handleDelete}>
             <img className="food-card--delete-img" src={bin} alt="Delete" />
           </div>
           <h2>{name}</h2>
-          <div>
+          <div onClick={handleEdit}>
             <img className="food-card--edit-img" src={edit} alt="Edit" />
           </div>
         </div>
